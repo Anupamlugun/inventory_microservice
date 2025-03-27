@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/ProductCategory
+    password: lugun
+
+  application:
+    name: ProductCategory
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: "true"
+  flyway:
+    baseline-on-migrate: true # Allows Flyway to baseline an existing DB
+    enabled: true # Enable Flyway
+    locations: classpath:db/migration # Default folder for migration scripts
+
+server:
+  port: 8081
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

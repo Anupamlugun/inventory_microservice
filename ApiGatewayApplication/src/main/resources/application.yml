@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: ApiGatewayApplication
+
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          "[/**]": # Apply CORS for all routes
+            allowedOrigins:
+              - "http://localhost:8080" # Allow frontend domain (Change as needed)
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders:
+              - "*"
+            allowCredentials: true # Allow cookies and authorization headers
+
+      routes:
+        - id: PRODUCTCATEGORY
+          uri: lb://PRODUCTCATEGORY
+          predicates:
+            - Path=/productcategory/**
+          filters:
+            - StripPrefix=1
+
+        - id: SUPPLIERSTOCK
+          uri: lb://SUPPLIERSTOCK
+          predicates:
+            - Path=/supplierstock/**
+          filters:
+            - StripPrefix=1
+        - id: ORDERSALE
+          uri: lb://ORDERSALE
+          predicates:
+            - Path=/ordersale/**
+          filters:
+            - StripPrefix=1
+
+server:
+  port: 8888
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+# 🛠 Explanation of CORS Configuration
+# Property	Description
+# globalcors.cors-configurations['/**']	Applies CORS rules to all routes.
+# allowedOrigins	Defines which frontend origins are allowed to access the API Gateway.
+# allowedMethods	Specifies allowed HTTP methods (GET, POST, etc.).
+# allowedHeaders	Specifies which headers are allowed (* allows all).
+# allowCredentials	Enables cookies/auth headers to be sent in CORS requests.

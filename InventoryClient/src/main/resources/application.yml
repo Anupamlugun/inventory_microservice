@@ -1,0 +1,7 @@
+spring:
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
+  application:
+    name: Inventory
